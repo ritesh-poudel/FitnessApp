@@ -20,6 +20,8 @@ enum AppConstants {
         static let habits = "savedHabits"
         static let lastResetDate = "lastResetDate"
         static let hasLaunchedBefore = "hasLaunchedBefore"
+        static let displayName = "displayName"
+        static let unitSystem = "unitSystem"
     }
 
     // MARK: - Limits

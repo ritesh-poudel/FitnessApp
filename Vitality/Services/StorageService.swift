@@ -42,10 +42,48 @@ actor StorageService {
         userDefaults.set(date, forKey: AppConstants.UserDefaultsKeys.lastResetDate)
     }
 
+    // MARK: - Onboarding
+
+    /// False until onboarding has been completed once.
+    func hasOnboarded() -> Bool {
+        userDefaults.bool(forKey: AppConstants.UserDefaultsKeys.hasLaunchedBefore)
+    }
+
+    func setHasOnboarded(_ value: Bool) {
+        userDefaults.set(value, forKey: AppConstants.UserDefaultsKeys.hasLaunchedBefore)
+    }
+
+    // MARK: - Profile
+
+    /// The name shown in the greeting. Empty until onboarding collects it.
+    func displayName() -> String {
+        userDefaults.string(forKey: AppConstants.UserDefaultsKeys.displayName) ?? ""
+    }
+
+    func saveDisplayName(_ name: String) {
+        userDefaults.set(name, forKey: AppConstants.UserDefaultsKeys.displayName)
+    }
+
+    func unitSystem() -> UnitSystem {
+        guard let raw = userDefaults.string(forKey: AppConstants.UserDefaultsKeys.unitSystem),
+              let units = UnitSystem(rawValue: raw) else {
+            return .kilograms
+        }
+        return units
+    }
+
+    func saveUnitSystem(_ units: UnitSystem) {
+        userDefaults.set(units.rawValue, forKey: AppConstants.UserDefaultsKeys.unitSystem)
+    }
+
     // MARK: - Reset
 
+    /// Clears stored data and returns the app to its pre-onboarding state.
     func deleteAllData() {
         userDefaults.removeObject(forKey: AppConstants.UserDefaultsKeys.habits)
         userDefaults.removeObject(forKey: AppConstants.UserDefaultsKeys.lastResetDate)
+        userDefaults.removeObject(forKey: AppConstants.UserDefaultsKeys.hasLaunchedBefore)
+        userDefaults.removeObject(forKey: AppConstants.UserDefaultsKeys.displayName)
+        userDefaults.removeObject(forKey: AppConstants.UserDefaultsKeys.unitSystem)
     }
 }
