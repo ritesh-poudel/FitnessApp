@@ -25,6 +25,12 @@ struct TrendsView: View {
                 .padding(.bottom, Theme.Spacing.gutter)
 
             comparison
+
+            BlockGridView(
+                title: "Move goal, last four weeks",
+                levels: BlockLevel.lastFourWeeks
+            )
+            .overlay(alignment: .top) { RuleView(weight: Theme.rule) }
         }
     }
 
