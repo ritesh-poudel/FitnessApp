@@ -7,6 +7,10 @@
 
 import SwiftUI
 
+#if canImport(UIKit)
+import UIKit
+#endif
+
 extension View {
     /// Applies a card style to the view
     func cardStyle() -> some View {
@@ -19,6 +23,8 @@ extension View {
     
     /// Hides the keyboard
     func hideKeyboard() {
+        #if canImport(UIKit)
         UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+        #endif
     }
 }
