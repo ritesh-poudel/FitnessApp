@@ -113,7 +113,7 @@ class WorkoutViewModel {
 
 // MARK: - Main View
 
-struct ContentView: View {
+struct WorkoutTrackerView: View {
     @State private var viewModel = WorkoutViewModel()
     @Namespace private var animation
     
@@ -651,5 +651,5 @@ struct SpringButtonStyle: ButtonStyle {
 // MARK: - Preview
 
 #Preview {
-    ContentView()
+    WorkoutTrackerView()
 }

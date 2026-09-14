@@ -28,10 +28,6 @@ enum HabitCategory: String, Codable, CaseIterable, Identifiable {
         }
     }
 
-    var tint: Color {
-        switch self {
-        case .health: .pink
-        case .productivity: .indigo
-        }
-    }
+    /// The category's accent color. Defined in `Theme` so the palette lives in one place.
+    var tint: Color { accent }
 }
