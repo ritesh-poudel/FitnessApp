@@ -1,13 +1,13 @@
 //
-//  testUITests.swift
-//  testUITests
+//  VitalityUITests.swift
+//  VitalityUITests
 //
 //  Created by Aang phurba Sherpa on 9/13/26.
 //
 
 import XCTest
 
-final class testUITests: XCTestCase {
+final class VitalityUITests: XCTestCase {
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.

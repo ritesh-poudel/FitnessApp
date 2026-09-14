@@ -1,13 +1,13 @@
 //
-//  testUITestsLaunchTests.swift
-//  testUITests
+//  VitalityUITestsLaunchTests.swift
+//  VitalityUITests
 //
 //  Created by Aang phurba Sherpa on 9/13/26.
 //
 
 import XCTest
 
-final class testUITestsLaunchTests: XCTestCase {
+final class VitalityUITestsLaunchTests: XCTestCase {
 
     override class var runsForEachTargetApplicationUIConfiguration: Bool {
         true
