@@ -57,6 +57,9 @@ final class BaselineViewModel {
     var strongContrast = false
     var reduceMotion = false
     var units: UnitSystem = .kilograms
+    /// What the person said they were working towards during onboarding.
+    /// Shapes the generated readings.
+    private(set) var aim: TrainingAim = .steadyHabit
 
     var morningReminder = true
     var waterReminder = true
@@ -94,6 +97,8 @@ final class BaselineViewModel {
     // MARK: - Lifecycle
 
     func load() async {
+        units = await storage.unitSystem()
+        aim = await storage.trainingAim()
         habits = (try? await storage.loadHabits()) ?? []
         if habits.isEmpty {
             habits = Self.starterHabits

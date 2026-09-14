@@ -22,6 +22,7 @@ enum AppConstants {
         static let hasLaunchedBefore = "hasLaunchedBefore"
         static let displayName = "displayName"
         static let unitSystem = "unitSystem"
+        static let trainingAim = "trainingAim"
     }
 
     // MARK: - Limits

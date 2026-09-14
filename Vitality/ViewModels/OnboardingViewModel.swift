@@ -146,6 +146,7 @@ final class OnboardingViewModel {
     /// Writes the chosen setup, so the app opens configured rather than seeded.
     private func finish() async {
         await storage.saveUnitSystem(.kilograms)
+        await storage.saveTrainingAim(aim)
         await storage.setHasOnboarded(true)
 
         let habits = Self.habits(for: selectedMetrics, aim: aim)

@@ -76,6 +76,19 @@ actor StorageService {
         userDefaults.set(units.rawValue, forKey: AppConstants.UserDefaultsKeys.unitSystem)
     }
 
+    /// What the person is working towards, chosen during onboarding.
+    func trainingAim() -> TrainingAim {
+        guard let raw = userDefaults.string(forKey: AppConstants.UserDefaultsKeys.trainingAim),
+              let aim = TrainingAim(rawValue: raw) else {
+            return .steadyHabit
+        }
+        return aim
+    }
+
+    func saveTrainingAim(_ aim: TrainingAim) {
+        userDefaults.set(aim.rawValue, forKey: AppConstants.UserDefaultsKeys.trainingAim)
+    }
+
     // MARK: - Reset
 
     /// Clears stored data and returns the app to its pre-onboarding state.
@@ -85,5 +98,6 @@ actor StorageService {
         userDefaults.removeObject(forKey: AppConstants.UserDefaultsKeys.hasLaunchedBefore)
         userDefaults.removeObject(forKey: AppConstants.UserDefaultsKeys.displayName)
         userDefaults.removeObject(forKey: AppConstants.UserDefaultsKeys.unitSystem)
+        userDefaults.removeObject(forKey: AppConstants.UserDefaultsKeys.trainingAim)
     }
 }

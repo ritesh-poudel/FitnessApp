@@ -13,8 +13,18 @@ struct MetricDetailView: View {
     @Bindable var model: BaselineViewModel
     let metric: MetricSample
 
+    /// The generated reading, once it arrives. Nil means show the written one.
+    @State private var generated: String?
+    @State private var isGenerating = false
+
     private var detail: MetricDetail {
         metric.detail(steps: model.steps, units: model.units)
+    }
+
+    /// The generated reading when there is one, else the hand-written fallback.
+    /// Both render identically, so a failure to generate is invisible.
+    private var plainText: String {
+        generated ?? detail.plain
     }
 
     var body: some View {
@@ -54,6 +64,26 @@ struct MetricDetailView: View {
             }
         }
         .background(Theme.background)
+        .task(id: metric) {
+            await loadReading()
+        }
+    }
+
+    /// Asks the server for a reading. Silently keeps the written one on failure.
+    private func loadReading() async {
+        generated = nil
+        isGenerating = true
+        defer { isGenerating = false }
+
+        let text = await InsightService.shared.reading(
+            for: metric,
+            unit: detail.unit,
+            aim: model.aim,
+            units: model.units
+        )
+
+        guard !Task.isCancelled else { return }
+        generated = text
     }
 
     // MARK: - Navigation
@@ -161,15 +191,30 @@ struct MetricDetailView: View {
     /// The design's core idea: a number is only useful once something explains it.
     private var plainWords: some View {
         VStack(alignment: .leading, spacing: 6) {
-            Text("In plain words")
-                .kicker()
-                .foregroundStyle(Theme.Accent.a700)
+            HStack(spacing: Theme.Spacing.x2) {
+                Text("In plain words")
+                    .kicker()
+                    .foregroundStyle(Theme.Accent.a700)
 
-            Text(detail.plain)
+                if isGenerating {
+                    // A 2px bar rather than a spinner — the system has no
+                    // circular forms anywhere else.
+                    Rectangle()
+                        .fill(Theme.Accent.a700)
+                        .frame(width: 18, height: 2)
+                        .opacity(0.5)
+                        .transition(.opacity)
+                        .accessibilityHidden(true)
+                }
+            }
+            .animation(Theme.Motion.state, value: isGenerating)
+
+            Text(plainText)
                 .font(.system(size: 13.5))
                 .lineSpacing(3)
                 .foregroundStyle(Theme.text)
                 .fixedSize(horizontal: false, vertical: true)
+                .animation(Theme.Motion.state, value: plainText)
         }
         .frame(maxWidth: .infinity, alignment: .leading)
         .padding(14)

@@ -22,8 +22,8 @@ struct SquareToggle: View {
 
             if !isOn { Spacer(minLength: 0) }
         }
+        .frame(width: 50, height: 26)
         .padding(3)
-        .frame(width: 56, height: 32)
         .background(isOn ? Theme.accent : Theme.background)
         .overlay {
             Rectangle()
