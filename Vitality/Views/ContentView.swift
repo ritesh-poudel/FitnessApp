@@ -20,6 +20,7 @@ struct ContentView: View {
                     Label("Settings", systemImage: "gear")
                 }
         }
+        .tint(HabitCategory.health.tint)
     }
 }
 
