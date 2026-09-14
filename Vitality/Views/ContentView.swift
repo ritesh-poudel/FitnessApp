@@ -7,20 +7,11 @@
 
 import SwiftUI
 
+/// The app's root view. Baseline draws its own header and tab bar, so there is
+/// no `TabView` here — the whole chrome belongs to the design system.
 struct ContentView: View {
     var body: some View {
-        TabView {
-            DashboardView()
-                .tabItem {
-                    Label("Today", systemImage: "sun.max.fill")
-                }
-
-            SettingsView()
-                .tabItem {
-                    Label("Settings", systemImage: "gear")
-                }
-        }
-        .tint(HabitCategory.health.tint)
+        BaselineView()
     }
 }
 

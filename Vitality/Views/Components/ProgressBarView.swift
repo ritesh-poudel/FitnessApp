@@ -8,10 +8,13 @@
 import SwiftUI
 
 /// Flat, square-cornered progress track. The modernist replacement for `ProgressView`.
+///
+/// The design draws this as a 10px neutral-300 field with an accent fill.
 struct ProgressBarView: View {
     let value: Double
-    var color: Color
-    var height: CGFloat = 6
+    var color: Color = Theme.accent
+    var track: Color = Theme.Neutral.n300
+    var height: CGFloat = 10
 
     private var clamped: Double { min(max(value, 0), 1) }
 
@@ -19,7 +22,7 @@ struct ProgressBarView: View {
         GeometryReader { proxy in
             ZStack(alignment: .leading) {
                 Rectangle()
-                    .fill(color.opacity(0.16))
+                    .fill(track)
 
                 Rectangle()
                     .fill(color)
@@ -34,8 +37,9 @@ struct ProgressBarView: View {
 
 #Preview {
     VStack(spacing: 24) {
-        ProgressBarView(value: 0.3, color: HabitCategory.health.tint)
-        ProgressBarView(value: 0.8, color: HabitCategory.productivity.tint)
+        ProgressBarView(value: 0.3)
+        ProgressBarView(value: 0.84)
     }
     .padding()
+    .background(Theme.background)
 }
